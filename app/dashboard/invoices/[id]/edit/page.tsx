@@ -1,6 +1,7 @@
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 import Form from "@/app/ui/invoices/edit-form";
 import { fetchCustomers, fetchInvoiceById } from "@/app/lib/data";
+import { notFound } from "next/navigation";
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -9,6 +10,10 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     fetchInvoiceById(id),
     fetchCustomers(),
   ]);
+
+  if (!invoice) {
+    return notFound();
+  }
 
   return (
     <main>
@@ -28,6 +33,3 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 };
 
 export default Page;
-function fetchInvoice(id: any) {
-  throw new Error("Function not implemented.");
-}
