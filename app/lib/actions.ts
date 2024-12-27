@@ -118,7 +118,7 @@ export const updateInvoice = async (
   redirect("/dashboard/invoices");
 };
 
-export const deleteInvoice = async (id: string) => {
+/* export const deleteInvoice = async (id: string) => {
   try {
     await sql`DELETE FROM invoices WHERE id = ${id}`;
     revalidatePath("/dashboard/invoices");
@@ -129,4 +129,14 @@ export const deleteInvoice = async (id: string) => {
       message: "Database error: Unable to delete invoice.",
     };
   }
+}; */
+
+export const deleteInvoice = async (id: string) => {
+  try {
+    await sql`DELETE FROM invoices WHERE id = ${id}`;
+  } catch (error) {
+    console.error(error);
+  }
+
+  revalidatePath("/dashboard/invoices");
 };
