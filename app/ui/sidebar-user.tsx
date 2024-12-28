@@ -49,7 +49,7 @@ const SidebarUser = () => {
               }}
             >
               <DropdownMenuItem className="cursor-pointer w-full" asChild>
-                <button className="">
+                <button type="submit">
                   <LogOutIcon />
                   Log out
                 </button>

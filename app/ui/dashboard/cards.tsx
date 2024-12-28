@@ -1,17 +1,18 @@
-import {
-  BanknotesIcon,
-  ClockIcon,
-  UserGroupIcon,
-  InboxIcon,
-} from "@heroicons/react/24/outline";
+import { HandCoins, Users, Hourglass, FileText } from "lucide-react";
 
 import { fetchCardData } from "@/app/lib/data";
 
+import {
+  CardContent,
+  CardHeader,
+  Card as ShadCard,
+} from "@/components/ui/card";
+
 const iconMap = {
-  collected: BanknotesIcon,
-  customers: UserGroupIcon,
-  pending: ClockIcon,
-  invoices: InboxIcon,
+  collected: HandCoins,
+  customers: Users,
+  pending: Hourglass,
+  invoices: FileText,
 };
 
 export default async function CardWrapper() {
@@ -48,12 +49,16 @@ export function Card({
   const Icon = iconMap[type];
 
   return (
-    <div className="rounded-xl bg-gray-50 p-2 shadow-sm">
-      <div className="flex p-4">
-        {Icon ? <Icon className="h-5 w-5 text-gray-700" /> : null}
-        <h3 className="ml-2 text-sm font-medium">{title}</h3>
-      </div>
-      <p className="text-center">{value}</p>
-    </div>
+    <ShadCard>
+      <CardHeader className="pb-2">
+        <div className="flex justify-between items-center">
+          <div className="tracking-tight text-sm font-medium">{title}</div>
+          {Icon ? <Icon className="h-5 w-5 text-muted-foreground" /> : null}
+        </div>
+      </CardHeader>
+      <CardContent>
+        <p className="text-2xl font-bold">{value}</p>
+      </CardContent>
+    </ShadCard>
   );
 }

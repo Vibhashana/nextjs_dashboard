@@ -1,11 +1,9 @@
 "use client";
 
 import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import {
-  UserGroupIcon,
-  HomeIcon,
-  DocumentDuplicateIcon,
-} from "@heroicons/react/24/outline";
+
+import { House, FileText, Users } from "lucide-react";
+
 import Link from "next/link";
 
 import { usePathname } from "next/navigation";
@@ -13,13 +11,13 @@ import { usePathname } from "next/navigation";
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: "Home", href: "/dashboard", icon: HomeIcon },
+  { name: "Home", href: "/dashboard", icon: House },
   {
     name: "Invoices",
     href: "/dashboard/invoices",
-    icon: DocumentDuplicateIcon,
+    icon: FileText,
   },
-  { name: "Customers", href: "/dashboard/customers", icon: UserGroupIcon },
+  { name: "Customers", href: "/dashboard/customers", icon: Users },
 ];
 
 export default function NavLinks() {
@@ -32,6 +30,7 @@ export default function NavLinks() {
         return (
           <SidebarMenuItem key={link.name}>
             <SidebarMenuButton
+              className="h-10"
               asChild
               isActive={
                 pathname === link.href ||
