@@ -1,13 +1,14 @@
 import { GlobeAltIcon } from "@heroicons/react/24/outline";
-import { poppins } from "@/app/ui/fonts";
 
 export default function AcmeLogo() {
   return (
-    <div
-      className={`${poppins.className} flex flex-row items-center leading-none text-white`}
-    >
-      <GlobeAltIcon className="h-12 w-12 rotate-[15deg]" />
-      <p className="text-[44px]">Acme</p>
-    </div>
+    <>
+      <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+        <GlobeAltIcon className="size-5 rotate-[15deg]" />
+      </div>
+      <div className="flex-1 text-left leading-tight">
+        <span className="truncate text-xl">Acme</span>
+      </div>
+    </>
   );
 }
