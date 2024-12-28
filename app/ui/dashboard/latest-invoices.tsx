@@ -1,6 +1,4 @@
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
-import clsx from "clsx";
-import Image from "next/image";
 import { LatestInvoice } from "@/app/lib/definitions";
 import { fetchLatestInvoices } from "@/app/lib/data";
 import {
@@ -24,7 +22,7 @@ export default async function LatestInvoices() {
         <CardContent>
           <div className="flex grow flex-col justify-between rounded-md bg-primary-foreground dark:bg-primary-foreground/75 p-4">
             <div className="">
-              {latestInvoices.map((invoice, i) => {
+              {latestInvoices.map((invoice) => {
                 return (
                   <div
                     key={invoice.id}
