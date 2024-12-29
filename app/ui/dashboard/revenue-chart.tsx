@@ -34,7 +34,7 @@ const RevenueChart = ({ chartData }: PropType) => {
         />
         <YAxis
           axisLine={true}
-          tickFormatter={(value) => value.toLocaleString()}
+          tickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
         />
         <ChartTooltip
           cursor={false}
