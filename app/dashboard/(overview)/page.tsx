@@ -1,4 +1,4 @@
-import RevenueChart from "@/app/ui/dashboard/revenue-chart";
+import RevenueChartCard from "@/app/ui/dashboard/revenue-chart-card";
 import LatestInvoices from "@/app/ui/dashboard/latest-invoices";
 import CardWrapper from "@/app/ui/dashboard/cards";
 import { Suspense } from "react";
@@ -19,7 +19,7 @@ const Page = async () => {
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
         <Suspense fallback={<RevenueChartSkeleton />}>
-          <RevenueChart />
+          <RevenueChartCard />
         </Suspense>
         <Suspense fallback={<LatestInvoicesSkeleton />}>
           <LatestInvoices />

@@ -1,20 +1,29 @@
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+
 // Loading animation
 const shimmer =
-  'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
+  "before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent";
 
 export function CardSkeleton() {
   return (
-    <div
-      className={`${shimmer} relative overflow-hidden rounded-xl bg-gray-100 p-2 shadow-sm`}
-    >
-      <div className="flex p-4">
-        <div className="h-5 w-5 rounded-md bg-gray-200" />
-        <div className="ml-2 h-6 w-16 rounded-md bg-gray-200 text-sm font-medium" />
-      </div>
-      <div className="flex items-center justify-center truncate rounded-xl bg-white px-4 py-8">
-        <div className="h-7 w-20 rounded-md bg-gray-200" />
-      </div>
-    </div>
+    <Card>
+      <CardHeader>
+        <div className="flex justify-between items-center">
+          <Skeleton className="w-[50%] h-4" />
+          <Skeleton className="w-5 h-5 rounded-full" />
+        </div>
+      </CardHeader>
+      <CardContent>
+        <Skeleton className="w-[60%] h-7" />
+      </CardContent>
+    </Card>
   );
 }
 
@@ -31,30 +40,38 @@ export function CardsSkeleton() {
 
 export function RevenueChartSkeleton() {
   return (
-    <div className={`${shimmer} relative w-full overflow-hidden md:col-span-4`}>
-      <div className="mb-4 h-8 w-36 rounded-md bg-gray-100" />
-      <div className="rounded-xl bg-gray-100 p-4">
-        <div className="sm:grid-cols-13 mt-0 grid h-[410px] grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:gap-4" />
-        <div className="flex items-center pb-2 pt-6">
-          <div className="h-5 w-5 rounded-full bg-gray-200" />
-          <div className="ml-2 h-4 w-20 rounded-md bg-gray-200" />
-        </div>
-      </div>
+    <div className="w-full md:col-span-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <Skeleton className="h-6 w-[30%]" />
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Skeleton className="h-[300px] w-full" />
+        </CardContent>
+        <CardFooter>
+          <div className="flex items-center w-full">
+            <Skeleton className="size-5 rounded-full" />
+            <Skeleton className="ml-2 h-4 w-[30%]" />
+          </div>
+        </CardFooter>
+      </Card>
     </div>
   );
 }
 
 export function InvoiceSkeleton() {
   return (
-    <div className="flex flex-row items-center justify-between border-b border-gray-100 py-4">
-      <div className="flex items-center">
-        <div className="mr-2 h-8 w-8 rounded-full bg-gray-200" />
+    <div className="flex flex-row items-center justify-between">
+      <div className="flex items-center gap-4">
+        <Skeleton className="mr-2 size-10 rounded-full" />
         <div className="min-w-0">
-          <div className="h-5 w-40 rounded-md bg-gray-200" />
-          <div className="mt-2 h-4 w-12 rounded-md bg-gray-200" />
+          <Skeleton className="h-4 w-40" />
+          <Skeleton className="mt-1 h-3 w-12" />
         </div>
       </div>
-      <div className="mt-2 h-4 w-12 rounded-md bg-gray-200" />
+      <Skeleton className="mt-2 h-4 w-12 rounded-md" />
     </div>
   );
 }
@@ -62,22 +79,30 @@ export function InvoiceSkeleton() {
 export function LatestInvoicesSkeleton() {
   return (
     <div
-      className={`${shimmer} relative flex w-full flex-col overflow-hidden md:col-span-4`}
+      className={`relative flex w-full flex-col overflow-hidden md:col-span-4`}
     >
-      <div className="mb-4 h-8 w-36 rounded-md bg-gray-100" />
-      <div className="flex grow flex-col justify-between rounded-xl bg-gray-100 p-4">
-        <div className="bg-white px-6">
-          <InvoiceSkeleton />
-          <InvoiceSkeleton />
-          <InvoiceSkeleton />
-          <InvoiceSkeleton />
-          <InvoiceSkeleton />
-        </div>
-        <div className="flex items-center pb-2 pt-6">
-          <div className="h-5 w-5 rounded-full bg-gray-200" />
-          <div className="ml-2 h-4 w-20 rounded-md bg-gray-200" />
-        </div>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <Skeleton className="h-6 w-[30%]" />
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-6">
+            <InvoiceSkeleton />
+            <InvoiceSkeleton />
+            <InvoiceSkeleton />
+            <InvoiceSkeleton />
+            <InvoiceSkeleton />
+          </div>
+        </CardContent>
+        <CardFooter>
+          <div className="flex items-center w-full">
+            <Skeleton className="size-5 rounded-full" />
+            <Skeleton className="ml-2 h-4 w-[30%]" />
+          </div>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

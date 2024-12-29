@@ -17,7 +17,7 @@ import { ChevronUp, LogOutIcon } from "lucide-react";
 import SidebarAvatar from "./dashboard/sidebar-avatar";
 import { signOut } from "@/auth";
 
-const SidebarUser = () => {
+const SidebarUser = async () => {
   return (
     <SidebarMenu>
       <SidebarMenuItem>

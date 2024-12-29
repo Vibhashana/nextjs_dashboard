@@ -8,7 +8,7 @@ import {
 
 export const experimental_ppr = true;
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
       <SideNav />

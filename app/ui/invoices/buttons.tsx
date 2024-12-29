@@ -1,5 +1,7 @@
 import { deleteInvoice } from "@/app/lib/actions";
-import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { Button } from "@/components/ui/button";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 
 export function CreateInvoice() {
@@ -16,12 +18,14 @@ export function CreateInvoice() {
 
 export function UpdateInvoice({ id }: { id: string }) {
   return (
-    <Link
-      href={`/dashboard/invoices/${id}/edit`}
-      className="rounded-md border p-2 hover:bg-gray-100"
-    >
-      <PencilIcon className="w-5" />
-    </Link>
+    <Button variant="secondary" className="w-10" asChild>
+      <Link
+        href={`/dashboard/invoices/${id}/edit`}
+        className="rounded-md border p-2 hover:bg-gray-100"
+      >
+        <Pencil />
+      </Link>
+    </Button>
   );
 }
 
@@ -30,10 +34,10 @@ export function DeleteInvoice({ id }: { id: string }) {
 
   return (
     <form action={deleteInvoiceWithId}>
-      <button className="rounded-md border p-2 hover:bg-gray-100">
+      <Button variant="destructive" className="w-10 rounded-md p-2">
         <span className="sr-only">Delete</span>
-        <TrashIcon className="w-5" />
-      </button>
+        <Trash2 />
+      </Button>
     </form>
   );
 }
