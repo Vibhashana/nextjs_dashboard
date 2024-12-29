@@ -20,7 +20,6 @@ const chartConfig = {
 };
 
 const RevenueChart = ({ chartData }: PropType) => {
-  console.log(chartData);
   return (
     <ChartContainer config={chartConfig}>
       <BarChart accessibilityLayer data={chartData}>

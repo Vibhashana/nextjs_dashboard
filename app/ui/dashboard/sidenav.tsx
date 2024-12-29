@@ -3,15 +3,12 @@ import AcmeLogo from "@/app/ui/acme-logo";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarRail,
-  SidebarSeparator,
 } from "@/components/ui/sidebar";
-import SidebarUser from "@/app/ui/sidebar-user";
 
 export default function SideNav() {
   return (
@@ -24,7 +21,6 @@ export default function SideNav() {
           <AcmeLogo />
         </SidebarMenuButton>
       </SidebarHeader>
-      <SidebarSeparator />
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
@@ -32,10 +28,6 @@ export default function SideNav() {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarSeparator />
-      <SidebarFooter>
-        <SidebarUser />
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

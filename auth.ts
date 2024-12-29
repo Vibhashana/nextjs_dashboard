@@ -16,13 +16,21 @@ const getUser = async (email: string): Promise<User | undefined> => {
   }
 };
 
+// export const loginFormSchema = z.object({
+//   email: z.string().email(),
+//   password: z.string().min(6),
+// });
+
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
       async authorize(credentials) {
         const parsedCredentials = z
-          .object({ email: z.string().email(), password: z.string().min(6) })
+          .object({
+            email: z.string().email(),
+            password: z.string().min(6),
+          })
           .safeParse(credentials);
 
         if (parsedCredentials.success) {
