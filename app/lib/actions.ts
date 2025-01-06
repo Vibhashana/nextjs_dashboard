@@ -8,17 +8,27 @@ import { AuthError } from "next-auth";
 
 export const authenticate = async (
   prevState: string | undefined,
-  formData: FormData
+  formData: { email: string; password: string }
 ) => {
   try {
-    await signIn("credentials", formData);
+    await signIn("credentials", { ...formData, redirect: false });
+
+    return {
+      success: true,
+    };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return "Invalid credentials.";
+          return {
+            success: false,
+            error: "Invalid credentials.",
+          };
         default:
-          return "Something went wrong.";
+          return {
+            success: false,
+            error: "Something went wrong.",
+          };
       }
     }
 

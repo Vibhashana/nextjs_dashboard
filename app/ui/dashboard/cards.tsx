@@ -15,6 +15,25 @@ const iconMap = {
   invoices: FileText,
 };
 
+const colorMap = {
+  collected: {
+    bg: "bg-green-100 dark:bg-green-950",
+    icon: "text-green-900 dark:text-green-100",
+  },
+  customers: {
+    bg: "bg-blue-100 dark:bg-blue-950",
+    icon: "text-blue-900 dark:text-blue-100",
+  },
+  pending: {
+    bg: "bg-yellow-100 dark:bg-yellow-950",
+    icon: "text-yellow-900 dark:text-yellow-100",
+  },
+  invoices: {
+    bg: "bg-orange-100 dark:bg-orange-950",
+    icon: "text-orange-900 dark:text-orange-100",
+  },
+};
+
 export default async function CardWrapper() {
   const {
     totalPaidInvoices,
@@ -47,13 +66,20 @@ export function Card({
   type: "invoices" | "customers" | "pending" | "collected";
 }) {
   const Icon = iconMap[type];
+  const colors = colorMap[type];
 
   return (
     <ShadCard>
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center">
           <div className="tracking-tight text-sm font-medium">{title}</div>
-          {Icon ? <Icon className="h-5 w-5 text-muted-foreground" /> : null}
+          {Icon ? (
+            <div
+              className={`size-10 flex items-center justify-center ${colors.bg} rounded-full`}
+            >
+              <Icon className={`h-5 w-5 ${colors.icon}`} />
+            </div>
+          ) : null}
         </div>
       </CardHeader>
       <CardContent>

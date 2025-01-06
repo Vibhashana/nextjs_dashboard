@@ -1,6 +1,5 @@
 "use client";
 
-import { useActionState } from "react";
 import { authenticate } from "@/app/lib/actions";
 import {
   Card,
@@ -10,17 +9,72 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { KeyRound, AtSign, CircleAlert, LoaderCircle } from "lucide-react";
+import { CircleAlert, LoaderCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { Label } from "@/components/ui/label";
+import { z } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function LoginForm() {
-  const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
-    undefined
-  );
+const loginFormSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  password: z
+    .string({ required_error: "Password is required" })
+    .min(6, { message: "Password must contain at least 6 characters" }),
+});
+
+const LoginForm = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
+
+  const form = useForm<z.infer<typeof loginFormSchema>>({
+    resolver: zodResolver(loginFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "onBlur",
+  });
+
+  console.log(form.formState);
+
+  const onSubmitForm: SubmitHandler<z.infer<typeof loginFormSchema>> = async (
+    data
+  ) => {
+    try {
+      const response = await authenticate(undefined, data);
+
+      if (!response?.success) {
+        form.setError("root", {
+          type: "server",
+          message: response?.error || "Authentication failed",
+        });
+
+        return;
+      }
+
+      await router.push(callbackUrl || "/dashboard");
+      router.refresh();
+    } catch (error) {
+      form.setError("root", {
+        type: "server",
+        message:
+          error instanceof Error ? error.message : "Authentication failed",
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <Card>
@@ -29,61 +83,66 @@ export default function LoginForm() {
           <CardDescription>Login with your email and password</CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={formAction}>
-            <div className="grid gap-6">
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <div className="relative">
-                  <Input
-                    id="email"
-                    type="email"
-                    name="email"
-                    placeholder="Enter your email address"
-                    className="peer pl-10 mt-1"
-                    required
-                  />
-                  <AtSign className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-500 peer-focus:text-gray-900 dark:peer-focus:text-white transition-colors" />
-                </div>
-              </div>
-
-              <div>
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    type="password"
-                    name="password"
-                    className="peer pl-10 mt-1"
-                    placeholder="Enter password"
-                    required
-                    minLength={6}
-                  />
-                  <KeyRound className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-500 peer-focus:text-gray-900 dark:peer-focus:text-white transition-colors" />
-                </div>
-              </div>
-
-              {errorMessage && (
-                <div className="flex items-center gap-2 space-x-1">
-                  <CircleAlert className="h-5 w-5 text-red-500" />
-                  <p className="text-sm text-red-500">{errorMessage}</p>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmitForm)}
+              className="space-y-4"
+            >
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        placeholder="user@example.com"
+                        {...field}
+                        disabled={form.formState.isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="******"
+                        {...field}
+                        disabled={form.formState.isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {form.formState.errors?.root && (
+                <div className="flex items-center gap-2 text-destructive rounded-md text-sm">
+                  <CircleAlert size={16} />
+                  <span>{form.formState.errors.root.message}</span>
                 </div>
               )}
-
               <Button
                 type="submit"
                 className="w-full"
-                aria-disabled={isPending}
-                disabled={isPending}
+                disabled={form.formState.isSubmitting}
               >
-                {isPending ? (
+                {form.formState.isSubmitting ? (
                   <LoaderCircle className="animate-spin" />
                 ) : (
                   <span>Log in</span>
                 )}
               </Button>
-            </div>
-          </form>
-          {/* </Form> */}
+            </form>
+          </Form>
           <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border my-6">
             <span className="relative z-10 bg-card px-2 text-muted-foreground">
               Or
@@ -102,4 +161,6 @@ export default function LoginForm() {
       </Card>
     </div>
   );
-}
+};
+
+export default LoginForm;
